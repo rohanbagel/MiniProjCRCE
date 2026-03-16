@@ -1,0 +1,78 @@
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
+const express = require('express');
+const connectDB = require('./config/db');
+const cors = require('cors');
+const alertRoutes = require('./routes/alertRoutes');
+const animalRoutes = require('./routes/animalRoutes');
+const farmRoutes = require('./routes/farmRoutes');
+const farmerRoutes = require('./routes/farmerRoutes');
+const sensorEventRoutes = require('./routes/sensorEventRoutes');
+const vaccinationEventRoutes = require('./routes/vaccinationEventRoutes');
+const vaccinationScheduleRoutes = require('./routes/vaccinationScheduleRoutes');
+const HealthSnapshotRoutes = require('./routes/healthSnapshotRoutes');
+const farmImageRoutes = require('./routes/farmImageRoutes');
+const productionRoutes = require('./routes/productionRoutes');
+const expenseRoutes = require('./routes/expenseRoutes');
+const saleRoutes = require('./routes/saleRoutes');
+const marketPriceRoutes = require('./routes/marketPriceRoutes');
+const biRoutes = require('./routes/biRoutes');
+const heartRateThresholdRoutes = require('./routes/heartRateThresholdRoutes');
+const adminRoutes = require('./routes/adminRoutes');
+const radarRoutes = require('./routes/radarRoutes');
+
+
+const app = express();
+
+app.use(cors(
+    {
+        origin: '*',
+    }
+));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+connectDB();
+
+app.use('/api/farmers', farmerRoutes);
+app.use('/api/animals', animalRoutes);
+app.use('/api/farms', farmRoutes);
+app.use('/api/alerts', alertRoutes);
+app.use('/api/sensor-events', sensorEventRoutes);
+app.use('/api/vaccination-events', vaccinationEventRoutes);
+app.use('/api/vaccination-schedules', vaccinationScheduleRoutes);
+app.use('/api/health-snapshots', HealthSnapshotRoutes);
+app.use('/api/farm-images', farmImageRoutes);
+app.use('/api/production-records', productionRoutes);
+app.use('/api/expenses', expenseRoutes);
+app.use('/api/sales', saleRoutes);
+app.use('/api/market-prices', marketPriceRoutes);
+app.use('/api/bi', biRoutes);
+app.use('/api/heart-rate-thresholds', heartRateThresholdRoutes);
+app.use('/api/schemes', require('./routes/schemeRoutes'));
+app.use('/api/marketplace', require('./routes/marketplaceRoutes'));
+app.use('/api/payments', require('./routes/paymentRoutes'));
+app.use('/api/iot', require('./routes/iotRoutes'));
+app.use('/api/radar', radarRoutes);
+app.use('/api/herd-watch', require('./routes/herdWatchRoutes'));
+app.use('/api/emergency', require('./routes/emergencyRoutes'));
+app.use('/api/summary', require('./routes/summaryRoutes'));
+app.use('/api/disease-detect', require('./routes/aiDiseaseRoutes'));
+app.use('/api/insights', require('./routes/insightRoutes'));
+app.use('/api/admin', adminRoutes);
+app.use('/api/business', require('./routes/businessRoutes'));
+app.use('/api/voice', require('./routes/voiceRoutes'));
+app.use('/api/farmer-verify', require('./routes/farmerVerifyRoutes'));
+app.use('/api/biz-auth', require('./routes/bizAuthRoutes'));
+app.use('/api/whatsapp', require('./routes/whatsappRoutes'));
+app.use('/api/alert-preferences', require('./routes/alertPreferenceRoutes'));
+
+const port = process.env.PORT;
+
+app.get('/', (req, res) => {
+    res.send('Backend is up and running!');
+});
+
+app.listen(port, () => {
+    console.log(`Server is listening on port ${port}`);
+});
