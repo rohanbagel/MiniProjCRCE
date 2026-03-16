@@ -1,13 +1,19 @@
 <div align="center">
 
-# Team Pony — Pashu Pehchan
+# Pashu Pehchan
 
 [![Pashu Pehchan](https://img.shields.io/badge/Pashu%20Pehchan-Livestock%20Management-2ecc71?style=for-the-badge&logo=github&logoColor=white)](https://github.com/wrestle-R/MoneyCouncil)
-[![Team Mirror Family](https://img.shields.io/badge/Team-Mirror%20Family-e74c3c?style=for-the-badge&logo=team)](https://github.com/wrestle-R/MoneyCouncil)
 
 </div>
 
 ---
+
+## Team Members
+
+- 10170 - Rohan Benegal
+- 10176 - Harsh Dalvi
+- 10175 - Aditya Dabreo
+- 10174 - Swayam Choudhari
 
 ## Technology Stack
 
@@ -100,7 +106,6 @@ npm run dev
 
 The web dashboard will be available at `http://localhost:5173`.
 
-
 ### 4. Mobile App (React-Native)
 
 ```bash
@@ -116,33 +121,6 @@ Scan the QR code with the Expo Go app on your phone.
 - **`backend/`**: Handles core business logic, user authentication, and database interactions for the web portal.
 - **`frontend/`**: The main user interface for farmers to log in, view dashboards, manage animals, and access the marketplace.
 - **`app/`**: A cross-platform mobile application providing on-the-go access to key features like alerts and profile viewing.
-- **`arduino code/`**: Contains firmware (`iotcode.ino`) for the hardware modules, reading from sensors like RFID (MFRC522), Heart Rate (MAX30105), and Temp/Humidity (DHT11).
-
-
-## Support
-
-For questions, issues, or contributions, please open an issue in this repository.
-
----
-
-## 👥 Team Pony
-
-**Built with ❤️ by Team Pony**
-
-**Team Members:**
-
-- **Arshdeep Kaur** - [GitHub](https://github.com/arshdeepkaur22)
-- **Russel Daniel Paul** - [GitHub](https://github.com/wrestle-R)
-- **Romeiro Fernandes** - [GitHub](https://github.com/romeirofernandes)
-- **Rohan Benegal** - [GitHub](https://github.com/rohanbagel)
-- **Gavin Soares** - [GitHub](https://github.com/gavin100305)
-- **Reniyas Nadar** - [GitHub](https://github.com/Reniyas717)
-
-<div align="center">
-
----
-
-[![GitHub Stars](https://img.shields.io/github/stars/wrestle-R/Mirror_Family?style=social&cacheSeconds=60)](https://github.com/romeirofernandes/tech-fiesta/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/wrestle-R/Mirror_Family?style=social)](https://github.com/romeirofernandes/tech-fiesta/network/members)
+- **`arduino code/`**: Contains firmware (`iotcode.ino`) for the hardware modules, reading from sensors like RFID (MFRC522), Heart Rate (MAX30105), and Temp/Humidity (DHT11)
 
 </div>
