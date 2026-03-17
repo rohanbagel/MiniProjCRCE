@@ -35,7 +35,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
-// Simplified farmer navigation — no marketplace, orders, sales, or full reports
+// Simplified farmer navigation — only core tabs shown
 const navGroups = [
   {
     label: "My Farm",
@@ -46,11 +46,11 @@ const navGroups = [
         url: "/farms",
         icon: Tractor,
         subItems: [
-          { title: "My Farms", url: "/farms" },
-          { title: "Add a Farm", url: "/farms/create" },
-          { title: "Watch My Farm", url: "/farm-monitoring" },
-          { title: "Farm Boundary", url: "/geofencing", icon: Radio },
-          { title: "Herd Watch", url: "/herd-watch" },
+          { title: "My Farm", url: "/farms" },
+          { title: "Add Farm", url: "/farms/create" },
+          // { title: "Watch My Farm", url: "/farm-monitoring" },
+          // { title: "Farm Boundary", url: "/geofencing", icon: Radio },
+          // { title: "Herd Watch", url: "/herd-watch" },
         ],
       },
       {
@@ -59,7 +59,7 @@ const navGroups = [
         icon: Beef,
         subItems: [
           { title: "My Animals", url: "/animals" },
-          { title: "Add an Animal", url: "/animals/create" },
+          { title: "Add Animal", url: "/animals/create" },
         ],
       },
     ],
@@ -68,20 +68,20 @@ const navGroups = [
     label: "Health & Care",
     items: [
       { title: "Shot Schedule", url: "/calendar", icon: Calendar },
-      { title: "Animal Health", url: "/live-vitals", icon: Activity },
-      { title: "Disease AI", url: "/disease-detector", icon: Stethoscope },
+      // { title: "Animal Health", url: "/live-vitals", icon: Activity },
+      // { title: "Disease AI", url: "/disease-detector", icon: Stethoscope },
       { title: "Alerts", url: "/alerts", icon: Bell },
-      { title: "Emergency Help", url: "/emergency", icon: AlertCircle },
-      { title: "Production Tracking", url: "/bi/production", icon: Package },
+      // { title: "Emergency Help", url: "/emergency", icon: AlertCircle },
+      // { title: "Production Tracking", url: "/bi/production", icon: Package },
     ],
   },
   {
     label: "Help & Info",
     items: [
       // { title: "Aadhaar Verify", url: "/aadhaar-verify", icon: Fingerprint },
-      { title: "Govt. Help", url: "/schemes", icon: Sprout },
-      { title: "Insights", url: "/insights", icon: LineChart },
-      { title: "Video Report", url: "/video-summary", icon: Video },
+      { title: "Govt Help", url: "/schemes", icon: Sprout },
+      // { title: "Insights", url: "/insights", icon: LineChart },
+      // { title: "Video Report", url: "/video-summary", icon: Video },
     ],
   },
 ];
