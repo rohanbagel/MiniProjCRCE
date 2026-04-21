@@ -89,9 +89,35 @@ const navGroups = [
 export function AppSidebar() {
   const { user, mongoUser, logout, setIsBusinessMode } = useUser();
   const { theme, setTheme } = useTheme();
-  const { state } = useSidebar();
+  const { state, isMobile, setOpen } = useSidebar();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const isDark =
+    theme === "dark" ||
+    (theme === "system" && typeof window !== "undefined"
+      ? window.matchMedia("(prefers-color-scheme: dark)").matches
+      : false);
+
+  const sidebarColors = isDark
+    ? {
+        "--sidebar": "#121812",
+        "--sidebar-foreground": "#a8c0a8",
+        "--sidebar-border": "#223022",
+        "--sidebar-accent": "#1a251a",
+        "--sidebar-accent-foreground": "#d2e3d2",
+        "--sidebar-primary": "#5e8c5e",
+        "--sidebar-primary-foreground": "#edf5ed",
+      }
+    : {
+        "--sidebar": "#1e2d1e",
+        "--sidebar-foreground": "#c8ddc8",
+        "--sidebar-border": "#2f4a2f",
+        "--sidebar-accent": "#2a3b2a",
+        "--sidebar-accent-foreground": "#dbebdb",
+        "--sidebar-primary": "#3a6b3a",
+        "--sidebar-primary-foreground": "#e8f4e8",
+      };
 
   const isActive = (url, hasChildren = false) => {
     if (location.pathname === url) return true;
@@ -111,15 +137,38 @@ export function AppSidebar() {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
+  const handleSidebarMouseEnter = () => {
+    if (!isMobile) {
+      setOpen(true);
+    }
+  };
+
+  const handleSidebarMouseLeave = () => {
+    if (!isMobile) {
+      setOpen(false);
+    }
+  };
+
   return (
-    <Sidebar collapsible="icon" className="[&_[data-sidebar=sidebar]]:scrollbar-thin [&_[data-sidebar=sidebar]]:scrollbar-track-transparent [&_[data-sidebar=sidebar]]:scrollbar-thumb-border/40 hover:[&_[data-sidebar=sidebar]]:scrollbar-thumb-border/60 [&_[data-sidebar=sidebar]]:scrollbar-thumb-rounded-full">
+    <Sidebar
+      collapsible="icon"
+      onMouseEnter={handleSidebarMouseEnter}
+      onMouseLeave={handleSidebarMouseLeave}
+      className="[&_[data-sidebar=sidebar]]:scrollbar-thin [&_[data-sidebar=sidebar]]:scrollbar-track-transparent [&_[data-sidebar=sidebar]]:scrollbar-thumb-[#335133] hover:[&_[data-sidebar=sidebar]]:scrollbar-thumb-[#4b6e4b] [&_[data-sidebar=sidebar]]:scrollbar-thumb-rounded-full"
+      style={sidebarColors}
+    >
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-lg font-bold text-primary py-4 mb-2">पशु पहचान</SidebarGroupLabel>
+          <SidebarGroupLabel
+            className="py-4 mb-2 text-xl font-semibold"
+            style={{ color: "#e9f3e9", fontFamily: "Fraunces, serif", fontStyle: "italic" }}
+          >
+            पशु पहचान
+          </SidebarGroupLabel>
         </SidebarGroup>
         {navGroups.map((group) => (
           <SidebarGroup key={group.label}>
-            <SidebarGroupLabel className="text-xs uppercase tracking-wider text-muted-foreground/70 font-semibold">
+            <SidebarGroupLabel className="text-[10px] uppercase tracking-[0.2em] text-[#8fb08f] font-semibold">
               {group.label}
             </SidebarGroupLabel>
             <SidebarGroupContent>
@@ -132,8 +181,8 @@ export function AppSidebar() {
                           <SidebarMenuButton
                             isActive={isActive(item.url, true)}
                             className={cn(
-                              "cursor-pointer",
-                              state === "expanded" && isActive(item.url, true) && "bg-accent/50 border-l-4 border-primary pl-2"
+                              "cursor-pointer text-[#c8ddc8] hover:bg-[#2a3a2a] hover:text-[#ecf7ec] rounded-md",
+                              state === "expanded" && isActive(item.url, true) && "border-l-[3px] border-[#3a6b3a] bg-[#294029] text-[#ecf7ec] pl-2"
                             )}
                           >
                             <item.icon />
@@ -163,7 +212,8 @@ export function AppSidebar() {
                         asChild
                         isActive={isActive(item.url, true)}
                         className={cn(
-                          state === "expanded" && isActive(item.url, true) && "bg-accent/50 border-l-4 border-primary pl-2"
+                          "text-[#c8ddc8] hover:bg-[#2a3a2a] hover:text-[#ecf7ec] rounded-md",
+                          state === "expanded" && isActive(item.url, true) && "border-l-[3px] border-[#3a6b3a] bg-[#294029] text-[#ecf7ec] pl-2"
                         )}
                       >
                         <Link to={item.url}>
