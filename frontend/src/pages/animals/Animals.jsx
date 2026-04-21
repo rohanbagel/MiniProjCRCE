@@ -111,20 +111,20 @@ export default function Animals() {
 
   return (
     <Layout loading={loading}>
-      <div className="space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
+      <div className="organic-page space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-bold">My Animals</h1>
-            <p className="text-muted-foreground mt-1">
+            <h1 className="organic-title text-4xl">My Animals</h1>
+            <p className="organic-subtitle mt-1">
               See and manage all your animals
             </p>
           </div>
           <div className="flex gap-3">
-             <Button variant="outline" onClick={() => navigate("/animals/dead")}>
+             <Button className="organic-btn-outline" variant="outline" onClick={() => navigate("/animals/dead")}>
                Lost Animals
              </Button>
-             <Button onClick={() => navigate("/animals/create")} size="lg">
+             <Button className="organic-btn-primary" onClick={() => navigate("/animals/create")} size="lg">
                 <Plus className="mr-2 h-4 w-4" />
                 Add Animal
              </Button>
@@ -141,12 +141,12 @@ export default function Animals() {
                   placeholder="Search by name or tag ID..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 organic-input"
                 />
               </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="w-full sm:w-auto">
+                  <Button variant="outline" className="w-full sm:w-auto organic-btn-outline">
                     <Filter className="mr-2 h-4 w-4" />
                     {selectedSpecies === "all" ? "All Types" : selectedSpecies}
                   </Button>
@@ -188,7 +188,7 @@ export default function Animals() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredAnimals.map((animal) => (
-              <Card key={animal._id} className="group hover:shadow-lg transition-shadow">
+              <Card key={animal._id} className="group organic-hover-card">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
                     <Avatar className="h-16 w-16 border-2 border-primary/20">

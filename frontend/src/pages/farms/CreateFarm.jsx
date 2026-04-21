@@ -213,10 +213,14 @@ export default function CreateFarm() {
 
   return (
     <Layout>
-      <div className="space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
+      <div className="organic-page space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
+        <div>
+          <h1 className="organic-title text-4xl">Create Farm</h1>
+          <p className="organic-subtitle mt-1">Add a farm with location pinning and photo capture</p>
+        </div>
         <Card>
           <CardHeader>
-            <CardTitle>Add a New Farm</CardTitle>
+            <CardTitle className="text-2xl">Add a New Farm</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -288,7 +292,7 @@ export default function CreateFarm() {
                       value={searchQuery}
                       onChange={(e) => handleAddressSearch(e.target.value)}
                       placeholder="Search address or village name…"
-                      className="pl-9"
+                      className="pl-9 organic-input"
                     />
                   </div>
                   {showSuggestions && suggestions.length > 0 && (
@@ -311,7 +315,7 @@ export default function CreateFarm() {
 
                 <p className="text-xs text-muted-foreground">Or tap directly on the map to pin your location</p>
 
-                <div className="rounded-lg overflow-hidden border" style={{ height: 300 }}>
+                <div className="organic-soft overflow-hidden" style={{ height: 300 }}>
                   <MapContainer
                     center={coordinates || [20.5937, 78.9629]}
                     zoom={5}
@@ -331,6 +335,7 @@ export default function CreateFarm() {
                   value={formData.location}
                   onChange={(e) => handleInputChange("location", e.target.value)}
                   placeholder="Latitude, Longitude"
+                  className="organic-input"
                   readOnly
                 />
               </div>
@@ -339,11 +344,12 @@ export default function CreateFarm() {
                 <Button
                   type="button"
                   variant="outline"
+                  className="organic-btn-outline"
                   onClick={() => navigate("/farms")}
                 >
                   Go Back
                 </Button>
-                <Button type="submit" disabled={loading}>
+                <Button className="organic-btn-primary" type="submit" disabled={loading}>
                   {loading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />

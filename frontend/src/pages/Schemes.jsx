@@ -53,18 +53,18 @@ export default function Schemes() {
 
     return (
         <Layout>
-            <div className="space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
+            <div className="organic-page space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
 
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold flex items-center gap-2">
+                        <h1 className="organic-title text-4xl flex items-center gap-2">
                             Government Schemes
                         </h1>
                     </div>
                     <div className="flex items-center gap-2">
                         {loading && <span className="text-xs text-muted-foreground animate-pulse">Updating...</span>}
-                        <Button variant="outline" size="sm" onClick={fetchSchemes} disabled={loading}>
+                        <Button variant="outline" className="organic-btn-outline" size="sm" onClick={fetchSchemes} disabled={loading}>
                             <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
                             Refresh
                         </Button>
@@ -76,7 +76,7 @@ export default function Schemes() {
                     <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                         placeholder="Search schemes by name, ministry, or keyword..."
-                        className="pl-9"
+                        className="pl-9 organic-input"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
@@ -105,7 +105,7 @@ export default function Schemes() {
                             ))
                         ) : filteredSchemes.length > 0 ? (
                             filteredSchemes.map((scheme, index) => (
-                                <Card key={index} className="flex flex-col h-full hover:shadow-md transition-shadow duration-200">
+                                <Card key={index} className="flex flex-col h-full organic-hover-card duration-200">
                                     <CardHeader className="pb-3">
                                         <div className="flex justify-between items-start gap-2">
                                             <div className="space-y-1">
@@ -144,7 +144,7 @@ export default function Schemes() {
 
                                         {scheme.slug && (
                                             <Button
-                                                className="w-full mt-2"
+                                                className="w-full mt-2 organic-btn-outline"
                                                 variant="outline"
                                                 size="sm"
                                                 onClick={() => navigate(`/schemes/${scheme.slug}`)}

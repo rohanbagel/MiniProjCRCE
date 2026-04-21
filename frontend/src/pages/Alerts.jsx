@@ -316,12 +316,12 @@ export default function Alerts() {
 
   return (
     <Layout loading={loading && alerts.length === 0}>
-      <div className="space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
+      <div className="organic-page space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-bold">Alerts</h1>
-            <p className="text-muted-foreground mt-1">
+            <h1 className="organic-title text-4xl">Alerts</h1>
+            <p className="organic-subtitle mt-1">
               Monitor health alerts, vaccination reminders, and activity
               warnings
             </p>
@@ -329,6 +329,7 @@ export default function Alerts() {
           <Button
             variant="outline"
             size="sm"
+            className="organic-btn-outline"
             onClick={() => {
               fetchAlerts();
               fetchStats();
@@ -381,20 +382,20 @@ export default function Alerts() {
           ].map((item, i) => (
             <div
               key={i}
-              className="bg-card border border-border rounded-xl p-4 flex items-center gap-4"
+              className="organic-stat-card flex items-center gap-4"
             >
               <div className={`${item.bg} p-3 rounded-lg`}>
                 <item.icon className={`h-5 w-5 ${item.color}`} />
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">
+                <p className="organic-stat-label">
                   {item.label}
                 </p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-2xl font-semibold tracking-tight text-foreground">
+                  <p className="organic-stat-value text-[36px]">
                     {item.val}
                   </p>
-                  <p className="text-[10px] text-muted-foreground font-medium">
+                  <p className="organic-stat-sub">
                     {item.sub}
                   </p>
                 </div>
@@ -436,7 +437,7 @@ export default function Alerts() {
                         placeholder="Search alerts by message..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        className="pl-10"
+                        className="pl-10 organic-input"
                       />
                     </div>
                     <Select
@@ -534,7 +535,7 @@ export default function Alerts() {
             </Card>
 
             {/* Alerts Table */}
-            <div className="bg-card border border-border rounded-xl overflow-hidden">
+            <div className="organic-soft overflow-hidden">
               <Table>
                 <TableHeader>
                   <TableRow className="bg-muted/50">

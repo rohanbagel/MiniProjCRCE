@@ -90,15 +90,15 @@ export default function Farms() {
 
   return (
     <Layout loading={loading}>
-      <div className="space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
+      <div className="organic-page space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-bold">My Farms</h1>
-            <p className="text-muted-foreground mt-1">
+            <h1 className="organic-title text-4xl">My Farms</h1>
+            <p className="organic-subtitle mt-1">
               See and manage all your farms
             </p>
           </div>
-          <Button onClick={() => navigate("/farms/create")} size="lg">
+          <Button className="organic-btn-primary" onClick={() => navigate("/farms/create")} size="lg">
             <Plus className="mr-2 h-4 w-4" />
             Add a Farm
           </Button>
@@ -112,7 +112,7 @@ export default function Farms() {
                 placeholder="Search your farms..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
+                className="pl-10 organic-input"
               />
             </div>
           </CardContent>
@@ -139,7 +139,7 @@ export default function Farms() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredFarms.map((farm) => (
-              <Card key={farm._id} className="group hover:shadow-lg transition-shadow overflow-hidden">
+              <Card key={farm._id} className="group organic-hover-card overflow-hidden">
                 <div className="relative h-48 bg-muted">
                   {farm.imageUrl ? (
                     <img

@@ -91,10 +91,13 @@ export default function FarmDetail() {
 
   return (
     <Layout>
-      <div className="space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
+      <div className="organic-page space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold">{farm.name}</h1>
-          <Button onClick={() => navigate(`/farms/${id}/edit`)}>
+          <div>
+            <h1 className="organic-title text-4xl">{farm.name}</h1>
+            <p className="organic-subtitle mt-1">Farm profile, map coverage, and resident animals</p>
+          </div>
+          <Button className="organic-btn-primary" onClick={() => navigate(`/farms/${id}/edit`)}>
             <Edit2 className="mr-2 h-4 w-4" />
             Update Farm
           </Button>
@@ -117,7 +120,7 @@ export default function FarmDetail() {
             </div>
             <div className="p-6 space-y-4">
               <div>
-                <h1 className="text-3xl font-bold">{farm.name}</h1>
+                <h2 className="organic-title text-3xl not-italic">{farm.name}</h2>
                 <div className="flex items-center gap-2 text-muted-foreground mt-2">
                   <MapPin className="h-4 w-4" />
                   <span>{farm.location}</span>
@@ -133,7 +136,7 @@ export default function FarmDetail() {
               <CardTitle>Farm on Map</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="rounded-lg overflow-hidden border" style={{ height: 400 }}>
+              <div className="organic-soft overflow-hidden" style={{ height: 400 }}>
                 <MapContainer
                   center={coordinates}
                   zoom={15}
@@ -170,6 +173,7 @@ export default function FarmDetail() {
             <CardTitle>Animals at This Farm</CardTitle>
             <Button
               variant="outline"
+              className="organic-btn-outline"
               size="sm"
               onClick={() => navigate("/animals/create")}
             >
@@ -188,7 +192,7 @@ export default function FarmDetail() {
                 {animals.map((animal) => (
                   <div
                     key={animal._id}
-                    className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
+                    className="organic-soft organic-hover-card flex items-center justify-between p-4 cursor-pointer"
                     onClick={() => navigate(`/animals/${animal._id}`)}
                   >
                     <div className="flex items-center gap-3">

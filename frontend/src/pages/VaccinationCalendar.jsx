@@ -187,18 +187,18 @@ export default function VaccinationCalendar() {
 
   return (
     <Layout>
-      <div className="space-y-6 max-w-full px-2 sm:px-6 mx-auto p-4 md:p-6 lg:p-8">
+      <div className="organic-page space-y-6 max-w-full px-2 sm:px-6 mx-auto p-4 md:p-6 lg:p-8">
         {/* Header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+            <h1 className="organic-title text-3xl sm:text-4xl tracking-tight">
               {format(currentMonth, "MMMM yyyy")}
             </h1>
           </div>
 
           <div className="flex items-center gap-2 flex-wrap">
             {/* Month Navigation */}
-            <div className="flex items-center gap-1 border rounded-lg px-1 py-0.5">
+            <div className="flex items-center gap-1 border rounded-lg px-1 py-0.5 organic-soft">
               <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => navigateMonth("prev")}>
                 <ChevronLeft className="h-4 w-4" />
               </Button>
@@ -211,7 +211,7 @@ export default function VaccinationCalendar() {
             </div>
 
             {/* View Switcher */}
-            <div className="flex items-center border rounded-lg p-0.5">
+            <div className="flex items-center border rounded-lg p-0.5 organic-soft">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button variant={view === "list" ? "secondary" : "ghost"} size="icon" className="h-8 w-8" onClick={() => setView("list")}>

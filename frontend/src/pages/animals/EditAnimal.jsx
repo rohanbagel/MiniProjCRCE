@@ -167,10 +167,14 @@ export default function EditAnimal() {
 
   return (
     <Layout>
-      <div className="space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
+      <div className="organic-page space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
+        <div>
+          <h1 className="organic-title text-4xl">Edit Animal</h1>
+          <p className="organic-subtitle mt-1">Refine profile information, reproductive status, and farm assignment</p>
+        </div>
         <Card>
           <CardHeader>
-            <CardTitle>Update Animal Details</CardTitle>
+            <CardTitle className="text-2xl">Update Animal Details</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -191,6 +195,7 @@ export default function EditAnimal() {
                 <Button
                   type="button"
                   variant="outline"
+                  className="organic-btn-outline"
                   onClick={() => fileInputRef.current?.click()}
                 >
                   <Upload className="mr-2 h-4 w-4" />
@@ -205,6 +210,7 @@ export default function EditAnimal() {
                     id="name"
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
+                    className="organic-input"
                     required
                   />
                 </div>
@@ -215,6 +221,7 @@ export default function EditAnimal() {
                     id="rfid"
                     value={formData.rfid}
                     onChange={(e) => handleInputChange("rfid", e.target.value)}
+                    className="organic-input"
                     required
                   />
                 </div>
@@ -244,6 +251,7 @@ export default function EditAnimal() {
                     id="breed"
                     value={formData.breed}
                     onChange={(e) => handleInputChange("breed", e.target.value)}
+                    className="organic-input"
                     required
                   />
                 </div>
@@ -274,7 +282,7 @@ export default function EditAnimal() {
                       value={formData.age}
                       onChange={(e) => handleInputChange("age", e.target.value)}
                       required
-                      className="flex-1"
+                      className="organic-input flex-1"
                     />
                     <Select
                       value={formData.ageUnit}
@@ -340,11 +348,12 @@ export default function EditAnimal() {
                 <Button
                   type="button"
                   variant="outline"
+                  className="organic-btn-outline"
                   onClick={() => navigate(`/animals/${id}`)}
                 >
                   Go Back
                 </Button>
-                <Button type="submit" disabled={loading}>
+                <Button className="organic-btn-primary" type="submit" disabled={loading}>
                   {loading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />

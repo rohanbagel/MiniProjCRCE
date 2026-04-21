@@ -313,14 +313,18 @@ export default function AnimalDetail() {
 
   return (
     <Layout>
-      <div className="space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
+      <div className="organic-page space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
+        <div>
+          <h1 className="organic-title text-4xl">{animal.name}</h1>
+          <p className="organic-subtitle mt-1">Health timeline, live vitals, and vaccination intelligence</p>
+        </div>
         {/* Header */}
         <div className="flex items-center justify-between">
           <div />
           <div className="flex gap-2">
             <Dialog open={shareDialogOpen} onOpenChange={setShareDialogOpen}>
               <DialogTrigger asChild>
-                <Button variant="outline">
+                <Button className="organic-btn-outline" variant="outline">
                   <Share2 className="mr-2 h-4 w-4" />
                   Share
                 </Button>
@@ -367,7 +371,7 @@ export default function AnimalDetail() {
             >
                 Report Death
             </Button>
-            <Button onClick={() => navigate(`/animals/${id}/edit`)}>
+            <Button className="organic-btn-primary" onClick={() => navigate(`/animals/${id}/edit`)}>
                 <Edit2 className="mr-2 h-4 w-4" />
                 Edit Animal
             </Button>

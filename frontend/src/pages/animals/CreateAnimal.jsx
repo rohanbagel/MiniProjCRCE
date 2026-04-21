@@ -415,7 +415,11 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
 
   return (
     <Layout>
-      <div className="space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
+      <div className="organic-page space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
+        <div>
+          <h1 className="organic-title text-4xl">Create Animal</h1>
+          <p className="organic-subtitle mt-1">Register identity, profile details, and vaccination baseline</p>
+        </div>
         {/* Header */}
         <div className="flex items-center justify-between">
           {step > 1 ? (
@@ -477,6 +481,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                 <Button
                   type="button"
                   variant="outline"
+                  className="organic-btn-outline"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={analyzingImage}
                 >
@@ -508,6 +513,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
                     placeholder="e.g., Laxmi"
+                    className="organic-input"
                   />
                 </div>
 
@@ -518,6 +524,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                     value={formData.rfid}
                     onChange={(e) => handleInputChange("rfid", e.target.value)}
                     placeholder="e.g., RF001234"
+                    className="organic-input"
                   />
                 </div>
 
@@ -547,6 +554,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                     value={formData.breed}
                     onChange={(e) => handleInputChange("breed", e.target.value)}
                     placeholder="e.g., Holstein"
+                    className="organic-input"
                   />
                 </div>
 
@@ -576,7 +584,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                       value={formData.age}
                       onChange={(e) => handleInputChange("age", e.target.value)}
                       placeholder="0"
-                      className="flex-1"
+                      className="organic-input flex-1"
                     />
                     <Select
                       value={formData.ageUnit}
@@ -633,7 +641,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
               </div>
 
               <div className="flex justify-end">
-                <Button onClick={handleNext} size="lg">
+                <Button className="organic-btn-primary" onClick={handleNext} size="lg">
                   Next: Health Info
                   <ChevronRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -681,6 +689,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                       id="lastVaccinationDate"
                       type="date"
                       value={answers.lastVaccinationDate}
+                      className="organic-input"
                       onChange={(e) => handleAnswerChange("lastVaccinationDate", e.target.value)}
                     />
                   </div>
@@ -787,11 +796,12 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
               </div>
 
               <div className="flex justify-between">
-                <Button variant="outline" onClick={() => setStep(1)}>
+                <Button className="organic-btn-outline" variant="outline" onClick={() => setStep(1)}>
                   <ChevronLeft className="mr-2 h-4 w-4" />
                   Go Back
                 </Button>
                 <Button
+                  className="organic-btn-primary"
                   onClick={handleSubmit}
                   disabled={loading || !answers.hasVaccinations || !answers.healthStatus}
                   size="lg"

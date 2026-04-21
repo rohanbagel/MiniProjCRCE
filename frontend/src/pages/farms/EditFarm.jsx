@@ -217,11 +217,15 @@ export default function EditFarm() {
 
   return (
     <Layout>
-      <div className="space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
+      <div className="organic-page space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
+        <div>
+          <h1 className="organic-title text-4xl">Edit Farm</h1>
+          <p className="organic-subtitle mt-1">Update your farm details, image, and map location</p>
+        </div>
 
         <Card>
           <CardHeader>
-            <CardTitle>Update Farm Details</CardTitle>
+            <CardTitle className="text-2xl">Update Farm Details</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -279,7 +283,7 @@ export default function EditFarm() {
                       value={searchQuery}
                       onChange={(e) => handleAddressSearch(e.target.value)}
                       placeholder="Search address or village name…"
-                      className="pl-9"
+                      className="pl-9 organic-input"
                     />
                   </div>
                   {showSuggestions && suggestions.length > 0 && (
@@ -302,7 +306,7 @@ export default function EditFarm() {
 
                 <p className="text-xs text-muted-foreground">Or tap directly on the map to pin your location</p>
 
-                <div className="rounded-lg overflow-hidden border" style={{ height: 300 }}>
+                <div className="organic-soft overflow-hidden" style={{ height: 300 }}>
                   <MapContainer
                     center={coordinates || [20.5937, 78.9629]}
                     zoom={coordinates ? 13 : 5}
@@ -322,6 +326,7 @@ export default function EditFarm() {
                   value={formData.location}
                   onChange={(e) => handleInputChange("location", e.target.value)}
                   placeholder="Latitude, Longitude"
+                  className="organic-input"
                   readOnly
                 />
               </div>
@@ -330,11 +335,12 @@ export default function EditFarm() {
                 <Button
                   type="button"
                   variant="outline"
+                  className="organic-btn-outline"
                   onClick={() => navigate(`/farms/${id}`)}
                 >
                   Go Back
                 </Button>
-                <Button type="submit" disabled={loading}>
+                <Button className="organic-btn-primary" type="submit" disabled={loading}>
                   {loading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
