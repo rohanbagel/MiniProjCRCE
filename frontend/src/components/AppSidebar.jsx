@@ -48,9 +48,9 @@ const navGroups = [
         subItems: [
           { title: "My Farm", url: "/farms" },
           { title: "Add Farm", url: "/farms/create" },
-          // { title: "Watch My Farm", url: "/farm-monitoring" },
-          // { title: "Farm Boundary", url: "/geofencing", icon: Radio },
-          // { title: "Herd Watch", url: "/herd-watch" },
+           { title: "Watch My Farm", url: "/farm-monitoring" },
+           { title: "Farm Boundary", url: "/geofencing", icon: Radio },
+          { title: "Herd Watch", url: "/herd-watch" },
         ],
       },
       {
@@ -68,20 +68,20 @@ const navGroups = [
     label: "Health & Care",
     items: [
       { title: "Shot Schedule", url: "/calendar", icon: Calendar },
-      // { title: "Animal Health", url: "/live-vitals", icon: Activity },
-      // { title: "Disease AI", url: "/disease-detector", icon: Stethoscope },
+       { title: "Animal Health", url: "/live-vitals", icon: Activity },
+       { title: "Disease AI", url: "/disease-detector", icon: Stethoscope },
       { title: "Alerts", url: "/alerts", icon: Bell },
-      // { title: "Emergency Help", url: "/emergency", icon: AlertCircle },
-      // { title: "Production Tracking", url: "/bi/production", icon: Package },
+       { title: "Emergency Help", url: "/emergency", icon: AlertCircle },
+       { title: "Production Tracking", url: "/bi/production", icon: Package },
     ],
   },
   {
     label: "Help & Info",
     items: [
-      // { title: "Aadhaar Verify", url: "/aadhaar-verify", icon: Fingerprint },
+       { title: "Aadhaar Verify", url: "/aadhaar-verify", icon: Fingerprint },
       { title: "Govt Help", url: "/schemes", icon: Sprout },
-      // { title: "Insights", url: "/insights", icon: LineChart },
-      // { title: "Video Report", url: "/video-summary", icon: Video },
+       { title: "Insights", url: "/insights", icon: LineChart },
+       { title: "Video Report", url: "/video-summary", icon: Video },
     ],
   },
 ];
