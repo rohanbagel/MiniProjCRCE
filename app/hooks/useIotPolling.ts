@@ -8,6 +8,7 @@ interface UseIotPollingOptions {
   rfid?: string | null;
   limit?: number;
   enabled?: boolean;
+  mergeLatest?: boolean;
   onNewData?: (data: any[]) => void;
 }
 
@@ -17,6 +18,7 @@ export function useIotPolling(options: UseIotPollingOptions = {}) {
     rfid = null,
     limit = 50,
     enabled = true,
+    mergeLatest = true,
     onNewData,
   } = options;
 
@@ -38,6 +40,8 @@ export function useIotPolling(options: UseIotPollingOptions = {}) {
   rfidRef.current = rfid;
   const limitRef = useRef(limit);
   limitRef.current = limit;
+  const mergeLatestRef = useRef(mergeLatest);
+  mergeLatestRef.current = mergeLatest;
   const onNewDataRef = useRef(onNewData);
   onNewDataRef.current = onNewData;
 
@@ -72,6 +76,10 @@ export function useIotPolling(options: UseIotPollingOptions = {}) {
         url += `&rfid=${encodeURIComponent(rfidRef.current)}`;
       }
 
+      if (mergeLatestRef.current) {
+        url += `&merge=true`;
+      }
+
       if (useSince && lastTimestamp.current && !isFirstFetch.current) {
         url += `&since=${encodeURIComponent(lastTimestamp.current)}`;
       }
@@ -82,7 +90,14 @@ export function useIotPolling(options: UseIotPollingOptions = {}) {
         throw new Error(`HTTP ${response.status}`);
       }
 
-      const newData = await response.json();
+      const payload = await response.json();
+      let newData = payload as any;
+      let mergedLatest: any = null;
+
+      if (payload && !Array.isArray(payload)) {
+        mergedLatest = payload.mergedLatest || null;
+        newData = Array.isArray(payload.readings) ? payload.readings : [];
+      }
 
       if (!mountedRef.current) return;
 
@@ -90,12 +105,18 @@ export function useIotPolling(options: UseIotPollingOptions = {}) {
       setError(null);
       setLastUpdated(Date.now());
 
+      const latestFromPayload = mergedLatest || (Array.isArray(newData) && newData[0] ? newData[0] : null);
+      if (latestFromPayload) {
+        setLatestReading(latestFromPayload);
+        if (latestFromPayload.timestamp) {
+          setLastUpdated(new Date(latestFromPayload.timestamp).getTime());
+        } else {
+          setLastUpdated(Date.now());
+        }
+      }
+
       if (Array.isArray(newData) && newData.length > 0) {
         lastTimestamp.current = newData[0].timestamp;
-
-        if (newData[0]) {
-          setLatestReading(newData[0]);
-        }
 
         if (isFirstFetch.current) {
           setData(newData.reverse());

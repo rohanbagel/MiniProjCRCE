@@ -15,6 +15,7 @@ export function useIotPolling(apiBase, options = {}) {
     farmerId = null,          // Filter by Farmer ID (optional)
     limit = 50,               // Number of readings to fetch
     enabled = true,           // Enable/disable polling
+    mergeLatest = true,        // Use merged latest vitals when available
     onNewData,                // Callback when new data arrives
   } = options;
 
@@ -86,6 +87,9 @@ export function useIotPolling(apiBase, options = {}) {
       if (farmerId) {
         url += `&farmerId=${encodeURIComponent(farmerId)}`;
       }
+      if (mergeLatest) {
+        url += `&merge=true`;
+      }
       
       // Only use 'since' parameter after first fetch to get incremental updates
       if (useSince && lastTimestamp.current && !isFirstFetch.current) {
@@ -98,20 +102,33 @@ export function useIotPolling(apiBase, options = {}) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
 
-      const newData = await response.json();
+      const payload = await response.json();
+      let newData = payload;
+      let mergedLatest = null;
+
+      if (payload && !Array.isArray(payload)) {
+        mergedLatest = payload.mergedLatest || null;
+        newData = Array.isArray(payload.readings) ? payload.readings : [];
+      }
 
       if (!mountedRef.current) return;
 
       setStatus('connected');
       setError(null);
 
-      if (newData && newData.length > 0) {
-        setLastUpdated(Date.now());
+      const latestFromPayload = mergedLatest || (Array.isArray(newData) && newData[0] ? newData[0] : null);
+      if (latestFromPayload) {
+        setLatestReading(latestFromPayload);
+        if (latestFromPayload.timestamp) {
+          setLastUpdated(new Date(latestFromPayload.timestamp).getTime());
+        } else {
+          setLastUpdated(Date.now());
+        }
+      }
+
+      if (Array.isArray(newData) && newData.length > 0) {
         // Update last timestamp for next poll
         lastTimestamp.current = newData[0].timestamp;
-        
-        // Set latest reading
-        setLatestReading(newData[0]);
         
         // On first fetch, replace all data
         if (isFirstFetch.current) {
@@ -129,6 +146,8 @@ export function useIotPolling(apiBase, options = {}) {
           // Notify callback via ref (won't cause re-renders)
           onNewDataRef.current?.(newData);
         }
+      } else if (isFirstFetch.current) {
+        isFirstFetch.current = false;
       }
     } catch (err) {
       console.error('IoT polling error:', err);

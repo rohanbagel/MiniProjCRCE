@@ -4,6 +4,7 @@ const Animal = require('../models/Animal');
 const Alert = require('../models/Alert');
 const HeartRateThreshold = require('../models/HeartRateThreshold');
 const HEART_RATE_DEFAULTS = require('../config/heartRateDefaults');
+const { getMergedLatestVitals } = require('../services/iotVitalsService');
 
 // IoT Device Connection Tracker
 const iotDeviceStatus = {
@@ -264,15 +265,12 @@ exports.createSensorReading = async (req, res) => {
 // GET /api/iot/sensors/latest/?rfid=&limit=&since=&farmerId=
 exports.getLatestReadings = async (req, res) => {
   try {
-    const { rfid, limit = 10, since, farmerId } = req.query;
-    const query = {};
+    const { rfid, limit = 10, since, farmerId, merge } = req.query;
+    const mergeEnabled = merge === 'true' || merge === '1';
+    const baseQuery = {};
     
     if (rfid) {
-      query.rfidTag = rfid.toLowerCase().replace(/\s+/g, '');
-    }
-    
-    if (since) {
-      query.timestamp = { $gt: new Date(since) };
+      baseQuery.rfidTag = rfid.toLowerCase().replace(/\s+/g, '');
     }
 
     if (farmerId) {
@@ -282,19 +280,29 @@ exports.getLatestReadings = async (req, res) => {
         const animals = await Animal.find({ farmId: { $in: farmer.farms } }).select('_id');
         const animalIds = animals.map(a => a._id);
         if (animalIds.length > 0) {
-          query.animalId = { $in: animalIds };
+          baseQuery.animalId = { $in: animalIds };
         } else {
-          return res.json([]);
+          return res.json(mergeEnabled ? { mergedLatest: null, readings: [] } : []);
         }
       } else {
-        return res.json([]);
+        return res.json(mergeEnabled ? { mergedLatest: null, readings: [] } : []);
       }
     }
 
-    const readings = await IotSensorReading.find(query)
+    const readingsQuery = { ...baseQuery };
+    if (since) {
+      readingsQuery.timestamp = { $gt: new Date(since) };
+    }
+
+    const readings = await IotSensorReading.find(readingsQuery)
       .sort({ timestamp: -1 })
       .limit(parseInt(limit))
       .populate('animalId', 'name rfid species breed');
+
+    if (mergeEnabled) {
+      const mergedLatest = await getMergedLatestVitals(baseQuery);
+      return res.json({ mergedLatest, readings });
+    }
 
     res.json(readings);
   } catch (error) {

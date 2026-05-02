@@ -149,7 +149,7 @@ export default function AnimalDetail() {
     if (!polledLatestReading) return null;
     return {
       ...polledLatestReading,
-      heart_rate: polledLatestReading.heartRate || polledLatestReading.heart_rate,
+      heart_rate: polledLatestReading.heartRate ?? polledLatestReading.heart_rate,
     };
   }, [polledLatestReading]);
 

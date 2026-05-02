@@ -12,6 +12,7 @@ const HealthSnapshot = require('../models/HealthSnapshot');
 const RFIDEvent = require('../models/RFIDEvent');
 const cloudinary = require('../config/cloudinary');
 const { generateEmbedding, cosineSimilarity, detectAndCropAnimals } = require('../services/embeddingService');
+const { getMergedLatestVitals } = require('../services/iotVitalsService');
 const AnimalEmbedding = require('../models/AnimalEmbedding');
 const { parseVaccinationAgeToMonths, computeVaccinationTarget, getCurrentAgeInMonths } = require('../utils/ageUtils');
 
@@ -757,7 +758,6 @@ exports.getAnimalPublic = async (req, res) => {
         let latestVitals = null;
         let vitalsHistory = [];
         try {
-            const IotSensorReading = require('../models/IotSensorReading');
             const orFilters = [];
             if (animal?._id) orFilters.push({ animalId: animal._id });
             if (animal?.rfid) orFilters.push({ rfidTag: animal.rfid });
@@ -765,10 +765,7 @@ exports.getAnimalPublic = async (req, res) => {
             if (orFilters.length > 0) {
                 const filter = { $or: orFilters };
 
-                latestVitals = await IotSensorReading.findOne(filter)
-                    .sort({ timestamp: -1 })
-                    .select('temperature humidity heartRate timestamp deviceId rfidTag')
-                    .lean();
+                latestVitals = await getMergedLatestVitals(filter);
 
                 const recent = await IotSensorReading.find(filter)
                     .sort({ timestamp: -1 })

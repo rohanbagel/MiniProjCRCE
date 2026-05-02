@@ -389,7 +389,7 @@ export default function AnimalDetailScreen() {
                        <Activity size={20} color="#f43f5e" />
                     </View>
                     <Text className="text-xl font-bold text-foreground">
-                      {latestReading?.heartRate ? `${Math.round(latestReading.heartRate)}` : '--'}
+                      {latestReading?.heartRate != null ? `${Math.round(latestReading.heartRate)}` : '--'}
                     </Text>
                     <Text className="text-[10px] text-muted-foreground font-medium">BPM</Text>
                   </CardContent>

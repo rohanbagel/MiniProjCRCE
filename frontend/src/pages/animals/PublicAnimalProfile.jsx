@@ -232,7 +232,7 @@ export default function PublicAnimalProfile() {
                     <div>
                       <p className="text-xs text-muted-foreground">Heart Rate</p>
                       <p className="text-2xl font-bold">
-                        {latestVitals.heartRate ? `${latestVitals.heartRate} BPM` : "—"}
+                        {latestVitals.heartRate != null ? `${latestVitals.heartRate} BPM` : "—"}
                       </p>
                     </div>
                   </div>
