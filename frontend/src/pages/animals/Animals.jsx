@@ -111,29 +111,49 @@ export default function Animals() {
 
   return (
     <Layout loading={loading}>
-      <div className="organic-page space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
+      <div className="organic-page">
+        <div className="farm-shell space-y-6 p-4 md:p-6 lg:p-8">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div>
-            <h1 className="organic-title text-4xl">My Animals</h1>
-            <p className="organic-subtitle mt-1">
+        <section className="farm-hero p-5 md:p-7">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h1 className="organic-title text-4xl md:text-5xl">My Animals</h1>
+              <p className="organic-subtitle mt-2 max-w-2xl text-sm md:text-base">
               See and manage all your animals
-            </p>
-          </div>
-          <div className="flex gap-3">
-             <Button className="organic-btn-outline" variant="outline" onClick={() => navigate("/animals/dead")}>
+              </p>
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+             <Button className="organic-btn-outline farm-inline-action" variant="outline" onClick={() => navigate("/animals/dead")}>
                Lost Animals
              </Button>
-             <Button className="organic-btn-primary" onClick={() => navigate("/animals/create")} size="lg">
-                <Plus className="mr-2 h-4 w-4" />
+             <Button className="organic-btn-primary farm-inline-action" onClick={() => navigate("/animals/create")} size="lg">
+                <Plus className="h-4 w-4" />
                 Add Animal
              </Button>
+            </div>
+          </div>
+        </section>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="animal-kpi">
+            <p className="animal-kpi-label">Total Animals</p>
+            <p className="animal-kpi-value mt-2">{animals.length}</p>
+          </div>
+          <div className="animal-kpi">
+            <p className="animal-kpi-label">Visible Records</p>
+            <p className="animal-kpi-value mt-2">{filteredAnimals.length}</p>
+          </div>
+          <div className="animal-kpi">
+            <p className="animal-kpi-label">Filter Mode</p>
+            <p className="mt-2 text-lg font-semibold capitalize text-foreground">
+              {selectedSpecies === "all" ? "All Types" : selectedSpecies}
+            </p>
           </div>
         </div>
 
         {/* Filters */}
-        <Card>
-          <CardContent className="pt-6">
+        <Card className="farm-panel">
+          <CardContent className="p-4 md:p-5">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -141,12 +161,12 @@ export default function Animals() {
                   placeholder="Search by name or tag ID..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 organic-input"
+                  className="h-11 pl-10 organic-input"
                 />
               </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="w-full sm:w-auto organic-btn-outline">
+                  <Button variant="outline" className="w-full sm:w-auto organic-btn-outline farm-inline-action">
                     <Filter className="mr-2 h-4 w-4" />
                     {selectedSpecies === "all" ? "All Types" : selectedSpecies}
                   </Button>
@@ -168,30 +188,32 @@ export default function Animals() {
 
         {/* Animals Grid */}
         {(!Array.isArray(filteredAnimals) || filteredAnimals.length === 0) ? (
-          <Card>
-            <CardContent className="flex flex-col items-center justify-center py-12">
+          <Card className="farm-panel">
+            <CardContent className="py-12">
+              <div className="farm-empty-state flex flex-col items-center justify-center px-6 py-12">
               <div className="text-6xl mb-4 flex items-center justify-center">{getSpeciesIcon("other", "h-16 w-16 text-muted-foreground")}</div>
               <h3 className="text-lg font-semibold mb-2">No animals yet</h3>
-              <p className="text-muted-foreground text-center mb-4">
+              <p className="text-muted-foreground text-center mb-5">
                 {searchQuery || selectedSpecies !== "all"
                   ? "Try different filters"
                   : "Add your first animal to get started"}
               </p>
               {!searchQuery && selectedSpecies === "all" && (
-                <Button onClick={() => navigate("/animals/create")}>
-                  <Plus className="mr-2 h-4 w-4" />
+                <Button className="organic-btn-primary farm-inline-action" onClick={() => navigate("/animals/create")}>
+                  <Plus className="h-4 w-4" />
                   Add Animal
                 </Button>
               )}
+              </div>
             </CardContent>
           </Card>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredAnimals.map((animal) => (
-              <Card key={animal._id} className="group organic-hover-card">
-                <CardContent className="p-6">
+              <Card key={animal._id} className="farm-panel farm-card-hover overflow-hidden">
+                <CardContent className="p-5 md:p-6">
                   <div className="flex items-start gap-4">
-                    <Avatar className="h-16 w-16 border-2 border-primary/20">
+                    <Avatar className="h-16 w-16 border-2 border-primary/20 shadow-sm">
                       <AvatarImage
                         src={animal.imageUrl}
                         alt={animal.name}
@@ -212,7 +234,7 @@ export default function Animals() {
                         </p>
                         </div>
                       </div>
-                      <div className="mt-3 space-y-2">
+                      <div className="mt-3 space-y-2 animal-surface p-2.5">
                         <div className="flex items-center gap-2 flex-wrap">
                           <Badge variant="secondary" className="capitalize">
                             {animal.species}
@@ -245,15 +267,16 @@ export default function Animals() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="flex-1"
+                      className="farm-inline-action flex-1"
                       onClick={() => navigate(`/animals/${animal._id}`)}
                     >
-                      <Eye className="mr-2 h-4 w-4" />
+                      <Eye className="h-4 w-4" />
                       View
                     </Button>
                     <Button
                       variant="outline"
                       size="sm"
+                      className="farm-inline-action"
                       onClick={() => navigate(`/animals/${animal._id}/edit`)}
                     >
                       <Edit2 className="h-4 w-4" />
@@ -263,6 +286,7 @@ export default function Animals() {
                         <Button
                           variant="outline"
                           size="sm"
+                          className="farm-inline-action"
                           onClick={() => setDeleteId(animal._id)}
                         >
                           <Trash2 className="h-4 w-4" />
@@ -290,6 +314,7 @@ export default function Animals() {
             ))}
           </div>
         )}
+      </div>
       </div>
     </Layout>
   );

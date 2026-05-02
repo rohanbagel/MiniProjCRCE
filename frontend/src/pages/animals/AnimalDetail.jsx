@@ -313,18 +313,19 @@ export default function AnimalDetail() {
 
   return (
     <Layout>
-      <div className="organic-page space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
-        <div>
-          <h1 className="organic-title text-4xl">{animal.name}</h1>
-          <p className="organic-subtitle mt-1">Health timeline, live vitals, and vaccination intelligence</p>
-        </div>
+      <div className="organic-page">
+        <div className="farm-shell space-y-6 p-4 md:p-6 lg:p-8">
+        <section className="farm-hero p-5 md:p-7">
+          <h1 className="organic-title text-4xl md:text-5xl">{animal.name}</h1>
+          <p className="organic-subtitle mt-2 max-w-2xl text-sm md:text-base">Health timeline, live vitals, and vaccination intelligence</p>
+        </section>
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="farm-panel flex flex-wrap items-center justify-between gap-3 p-4 md:p-5">
           <div />
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <Dialog open={shareDialogOpen} onOpenChange={setShareDialogOpen}>
               <DialogTrigger asChild>
-                <Button className="organic-btn-outline" variant="outline">
+                <Button className="organic-btn-outline farm-inline-action" variant="outline">
                   <Share2 className="mr-2 h-4 w-4" />
                   Share
                 </Button>
@@ -354,7 +355,7 @@ export default function AnimalDetail() {
                     <div className="flex-1 min-w-0 rounded-md border bg-muted/50 px-3 py-2 text-sm truncate">
                       {shareUrl}
                     </div>
-                    <Button size="sm" variant="outline" className="shrink-0" onClick={handleCopyLink}>
+                    <Button size="sm" variant="outline" className="shrink-0 farm-inline-action" onClick={handleCopyLink}>
                       {linkCopied ? (
                         <><Check className="mr-1 h-4 w-4 text-green-600" /> Copied</>
                       ) : (
@@ -367,11 +368,12 @@ export default function AnimalDetail() {
             </Dialog>
             <Button 
                 variant="destructive"
+                className="farm-inline-action"
                 onClick={() => setReportDeathOpen(true)}
             >
                 Report Death
             </Button>
-            <Button className="organic-btn-primary" onClick={() => navigate(`/animals/${id}/edit`)}>
+              <Button className="organic-btn-primary farm-inline-action" onClick={() => navigate(`/animals/${id}/edit`)}>
                 <Edit2 className="mr-2 h-4 w-4" />
                 Edit Animal
             </Button>
@@ -423,10 +425,10 @@ export default function AnimalDetail() {
         </AlertDialog>
 
         {/* Animal Info Card */}
-        <Card>
-          <CardContent className="p-6">
+        <Card className="farm-panel">
+          <CardContent className="p-5 md:p-6">
             <div className="flex flex-col md:flex-row gap-6">
-              <Avatar className="h-32 w-32 border-4 border-primary/20">
+              <Avatar className="h-32 w-32 border-4 border-primary/20 shadow-sm">
                 <AvatarImage src={animal.imageUrl} alt={animal.name} className="object-contain" />
                 <AvatarFallback className="text-6xl flex items-center justify-center">
                   {getSpeciesIcon(animal.species, "h-16 w-16 text-muted-foreground")}
@@ -450,7 +452,7 @@ export default function AnimalDetail() {
                   <Badge variant="outline">{animal.breed}</Badge>
                 </div>
                 {animal.farmId && (
-                  <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
+                  <div className="animal-surface flex items-center gap-3 p-3 rounded-lg">
                     <Avatar className="h-10 w-10">
                       <AvatarImage src={animal.farmId.imageUrl} />
                       <AvatarFallback>🏡</AvatarFallback>
@@ -471,7 +473,7 @@ export default function AnimalDetail() {
 
         {/* IoT Vital Signs Monitoring */}
         {animal.rfid && (
-          <Card>
+          <Card className="farm-panel">
             <CardHeader className="pb-2">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
@@ -484,7 +486,7 @@ export default function AnimalDetail() {
                   </CardDescription>
                 </div>
                 <Select value={timeRange} onValueChange={setTimeRange}>
-                  <SelectTrigger className="w-40">
+                  <SelectTrigger className="w-40 h-11">
                     <SelectValue placeholder="Time Range" />
                   </SelectTrigger>
                   <SelectContent>
@@ -498,7 +500,7 @@ export default function AnimalDetail() {
             <CardContent>
               {/* Latest Readings */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                  <div className="flex items-center gap-3 p-3 rounded-lg border bg-muted/30">
+                  <div className="farm-empty-state flex items-center gap-3 p-3 rounded-lg border bg-muted/30">
                     <Thermometer className="h-8 w-8 text-red-500" />
                     <div>
                       <p className="text-xs text-muted-foreground">Temperature</p>
@@ -509,7 +511,7 @@ export default function AnimalDetail() {
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 p-3 rounded-lg border bg-muted/30">
+                  <div className="farm-empty-state flex items-center gap-3 p-3 rounded-lg border bg-muted/30">
                     <Droplets className="h-8 w-8 text-blue-500" />
                     <div>
                       <p className="text-xs text-muted-foreground">Humidity</p>
@@ -520,7 +522,7 @@ export default function AnimalDetail() {
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 p-3 rounded-lg border bg-muted/30">
+                  <div className="farm-empty-state flex items-center gap-3 p-3 rounded-lg border bg-muted/30">
                     <Heart className="h-8 w-8 text-pink-500" />
                     <div>
                       <p className="text-xs text-muted-foreground">Heart Rate</p>
@@ -532,7 +534,7 @@ export default function AnimalDetail() {
                     </div>
                   </div>
                   {latestReading?.timestamp && (
-                    <div className="sm:col-span-3 text-xs text-muted-foreground mt-1">
+                    <div className="sm:col-span-3 text-xs text-muted-foreground mt-1 animal-surface rounded-md px-2.5 py-1.5">
                       Last reading: {format(new Date(latestReading.timestamp), "PPpp")}
                     </div>
                   )}
@@ -541,7 +543,7 @@ export default function AnimalDetail() {
               {/* Charts */}
               <div className="grid gap-4 grid-cols-1 lg:grid-cols-3">
                   {/* Temperature Chart */}
-                  <Card>
+                  <Card className="farm-empty-state">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-sm">Temperature</CardTitle>
                     </CardHeader>
@@ -566,7 +568,7 @@ export default function AnimalDetail() {
                   </Card>
 
                   {/* Humidity Chart */}
-                  <Card>
+                  <Card className="farm-empty-state">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-sm">Humidity</CardTitle>
                     </CardHeader>
@@ -591,7 +593,7 @@ export default function AnimalDetail() {
                   </Card>
 
                   {/* Heart Rate Chart */}
-                  <Card>
+                  <Card className="farm-empty-state">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-sm">Heart Rate</CardTitle>
                     </CardHeader>
@@ -637,6 +639,7 @@ export default function AnimalDetail() {
               <Button 
                 variant="outline" 
                 size="sm" 
+                className="farm-inline-action"
                 onClick={handleRefreshVaccinations}
                 disabled={refreshingVaccinations}
               >
@@ -647,7 +650,7 @@ export default function AnimalDetail() {
                 )}
                 Refresh Schedule
               </Button>
-              <Button variant="outline" size="sm" onClick={handleAddEvent}>
+              <Button variant="outline" size="sm" className="farm-inline-action" onClick={handleAddEvent}>
                 <Plus className="mr-2 h-4 w-4" />
                 Add Event
               </Button>
@@ -666,6 +669,7 @@ export default function AnimalDetail() {
           mode={editDialogMode}
           suggestedVaccines={vaccinationSchedules}
         />
+        </div>
       </div>
     </Layout>
   );

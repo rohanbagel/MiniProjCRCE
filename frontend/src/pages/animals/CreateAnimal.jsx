@@ -415,30 +415,33 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
 
   return (
     <Layout>
-      <div className="organic-page space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
-        <div>
-          <h1 className="organic-title text-4xl">Create Animal</h1>
-          <p className="organic-subtitle mt-1">Register identity, profile details, and vaccination baseline</p>
-        </div>
+      <div className="organic-page">
+        <div className="farm-shell space-y-6 p-4 md:p-6 lg:p-8">
+        <section className="farm-hero p-5 md:p-7">
+          <div>
+            <h1 className="organic-title text-4xl md:text-5xl">Create Animal</h1>
+            <p className="organic-subtitle mt-2 max-w-2xl text-sm md:text-base">Register identity, profile details, and vaccination baseline</p>
+          </div>
+        </section>
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="farm-panel flex items-center justify-between p-4 md:p-5">
           {step > 1 ? (
              <Button
                 variant="ghost"
                 onClick={() => setStep(step - 1)}
-                className="gap-2"
+                className="gap-2 rounded-xl"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Previous
               </Button>
           ) : <div />} 
-          <div className="text-sm text-muted-foreground">
+          <div className="farm-soft-chip">
             Step {step} of 2
           </div>
         </div>
 
         {/* Progress Bar */}
-        <div className="h-2 bg-secondary rounded-full overflow-hidden">
+        <div className="h-2 bg-secondary rounded-full overflow-hidden farm-panel border-0 p-0">
           <div
             className="h-full bg-primary transition-all duration-300"
             style={{ width: `${(step / 2) * 100}%` }}
@@ -447,16 +450,16 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
 
         {/* Step 1: Basic Information */}
         {step === 1 && (
-          <Card>
-            <CardHeader>
+          <Card className="farm-panel overflow-hidden">
+            <CardHeader className="border-b border-border/60 bg-linear-to-r from-background to-background/80">
               <CardTitle>Animal Details</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-6 p-4 md:p-6 lg:p-7">
               {/* Image Upload */}
-              <div className="flex flex-col items-center gap-4">
+              <div className="farm-panel farm-focus flex flex-col items-center gap-4 p-4 md:p-5">
                 <div className="relative">
                   <Avatar 
-                    className="h-32 w-32 border-4 border-primary/20 cursor-pointer" 
+                    className="h-32 w-32 border-4 border-primary/20 cursor-pointer shadow-sm" 
                     onClick={() => !analyzingImage && fileInputRef.current?.click()}
                   >
                     <AvatarImage src={imagePreview} className="object-cover" />
@@ -481,7 +484,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                 <Button
                   type="button"
                   variant="outline"
-                  className="organic-btn-outline"
+                  className="organic-btn-outline farm-inline-action"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={analyzingImage}
                 >
@@ -505,7 +508,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                 )}
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="animal-surface grid grid-cols-1 gap-4 p-4 md:grid-cols-2 md:p-5">
                 <div className="space-y-2">
                   <Label htmlFor="name">Animal Name *</Label>
                   <Input
@@ -513,7 +516,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
                     placeholder="e.g., Laxmi"
-                    className="organic-input"
+                    className="organic-input h-11"
                   />
                 </div>
 
@@ -524,7 +527,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                     value={formData.rfid}
                     onChange={(e) => handleInputChange("rfid", e.target.value)}
                     placeholder="e.g., RF001234"
-                    className="organic-input"
+                    className="organic-input h-11"
                   />
                 </div>
 
@@ -534,7 +537,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                     value={formData.species}
                     onValueChange={(value) => handleInputChange("species", value)}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="h-11">
                       <SelectValue placeholder="Choose type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -554,7 +557,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                     value={formData.breed}
                     onChange={(e) => handleInputChange("breed", e.target.value)}
                     placeholder="e.g., Holstein"
-                    className="organic-input"
+                    className="organic-input h-11"
                   />
                 </div>
 
@@ -564,7 +567,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                     value={formData.gender}
                     onValueChange={(value) => handleInputChange("gender", value)}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="h-11">
                       <SelectValue placeholder="Choose" />
                     </SelectTrigger>
                     <SelectContent>
@@ -584,13 +587,13 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                       value={formData.age}
                       onChange={(e) => handleInputChange("age", e.target.value)}
                       placeholder="0"
-                      className="organic-input flex-1"
+                      className="organic-input h-11 flex-1"
                     />
                     <Select
                       value={formData.ageUnit}
                       onValueChange={(value) => handleInputChange("ageUnit", value)}
                     >
-                      <SelectTrigger className="w-32">
+                      <SelectTrigger className="w-32 h-11">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -608,7 +611,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                     value={formData.farmId}
                     onValueChange={(value) => handleInputChange("farmId", value)}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="h-11">
                       <SelectValue placeholder="Pick your farm" />
                     </SelectTrigger>
                     <SelectContent>
@@ -640,8 +643,8 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                 </div>
               </div>
 
-              <div className="flex justify-end">
-                <Button className="organic-btn-primary" onClick={handleNext} size="lg">
+              <div className="flex justify-end border-t border-border/60 pt-5">
+                <Button className="organic-btn-primary farm-inline-action" onClick={handleNext} size="lg">
                   Next: Health Info
                   <ChevronRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -652,15 +655,15 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
 
         {/* Step 2: Questionnaire */}
         {step === 2 && (
-          <Card>
-            <CardHeader>
+          <Card className="farm-panel overflow-hidden">
+            <CardHeader className="border-b border-border/60 bg-linear-to-r from-background to-background/80">
               <CardTitle>Health & Shot Records</CardTitle>
               <p className="text-sm text-muted-foreground">
                 This helps us make the right shot schedule for your animal
               </p>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-2">
+            <CardContent className="space-y-6 p-4 md:p-6 lg:p-7">
+              <div className="animal-surface space-y-2 p-4">
                 <Label htmlFor="hasVaccinations">
                   Has this animal ever been given any shots (vaccines)? *
                 </Label>
@@ -668,7 +671,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                   value={answers.hasVaccinations}
                   onValueChange={(value) => handleAnswerChange("hasVaccinations", value)}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="h-11">
                     <SelectValue placeholder="Choose one" />
                   </SelectTrigger>
                   <SelectContent>
@@ -681,7 +684,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
 
               {answers.hasVaccinations === "yes" && (
                 <>
-                  <div className="space-y-2">
+                  <div className="animal-surface space-y-2 p-4">
                     <Label htmlFor="lastVaccinationDate">
                       When was the last shot given? (roughly)
                     </Label>
@@ -689,12 +692,12 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                       id="lastVaccinationDate"
                       type="date"
                       value={answers.lastVaccinationDate}
-                      className="organic-input"
+                      className="organic-input h-11"
                       onChange={(e) => handleAnswerChange("lastVaccinationDate", e.target.value)}
                     />
                   </div>
 
-                  <div className="space-y-3">
+                  <div className="animal-surface space-y-3 p-4">
                     <Label>
                       Which vaccines has this animal already received?
                     </Label>
@@ -702,11 +705,11 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                       Select all vaccines that have been given before. These are vaccines due before the animal's current age ({formData.age} {formData.ageUnit}).
                     </p>
                     {dueVaccines.length > 0 ? (
-                      <div className="border rounded-lg p-3 max-h-60 overflow-y-auto space-y-2">
+                      <div className="farm-empty-state rounded-lg p-3 max-h-60 overflow-y-auto space-y-2">
                         {dueVaccines.map((vaccine) => (
                           <label
                             key={vaccine._id}
-                            className="flex items-start gap-3 p-2 rounded-md hover:bg-muted/50 cursor-pointer"
+                            className="flex items-start gap-3 p-2 rounded-md hover:bg-muted/50 cursor-pointer transition-colors"
                           >
                             <input
                               type="checkbox"
@@ -740,7 +743,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                 </>
               )}
 
-              <div className="space-y-2">
+              <div className="animal-surface space-y-2 p-4">
                 <Label htmlFor="healthStatus">
                   How is the animal's health right now? *
                 </Label>
@@ -748,7 +751,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                   value={answers.healthStatus}
                   onValueChange={(value) => handleAnswerChange("healthStatus", value)}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="h-11">
                     <SelectValue placeholder="Choose health status" />
                   </SelectTrigger>
                   <SelectContent>
@@ -761,7 +764,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
               </div>
 
               {formData.gender === "female" && (
-                <div className="space-y-2">
+                <div className="animal-surface space-y-2 p-4">
                   <Label htmlFor="pregnancyStatus">
                     Is this animal pregnant or did she give birth recently?
                   </Label>
@@ -769,7 +772,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                     value={answers.pregnancyStatus}
                     onValueChange={(value) => handleAnswerChange("pregnancyStatus", value)}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="h-11">
                       <SelectValue placeholder="Choose status" />
                     </SelectTrigger>
                     <SelectContent>
@@ -782,7 +785,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                 </div>
               )}
 
-              <div className="space-y-2">
+              <div className="animal-surface space-y-2 p-4">
                 <Label htmlFor="additionalInfo">
                   Anything else to share? (optional)
                 </Label>
@@ -791,17 +794,17 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
                   value={answers.additionalInfo}
                   onChange={(e) => handleAnswerChange("additionalInfo", e.target.value)}
                   placeholder="Any other information about this animal's health or history..."
-                  className="w-full min-h-25 px-3 py-2 border rounded-md bg-transparent text-sm"
+                  className="organic-input w-full min-h-25 rounded-md px-3 py-2 text-sm"
                 />
               </div>
 
-              <div className="flex justify-between">
-                <Button className="organic-btn-outline" variant="outline" onClick={() => setStep(1)}>
+              <div className="flex justify-between border-t border-border/60 pt-5">
+                <Button className="organic-btn-outline farm-inline-action" variant="outline" onClick={() => setStep(1)}>
                   <ChevronLeft className="mr-2 h-4 w-4" />
                   Go Back
                 </Button>
                 <Button
-                  className="organic-btn-primary"
+                  className="organic-btn-primary farm-inline-action"
                   onClick={handleSubmit}
                   disabled={loading || !answers.hasVaccinations || !answers.healthStatus}
                   size="lg"
@@ -819,6 +822,7 @@ Return ONLY valid JSON, no markdown formatting or code blocks.`;
             </CardContent>
           </Card>
         )}
+        </div>
       </div>
     </Layout>
   );

@@ -89,7 +89,7 @@ const navGroups = [
 export function AppSidebar() {
   const { user, mongoUser, logout, setIsBusinessMode } = useUser();
   const { theme, setTheme } = useTheme();
-  const { state, isMobile, setOpen } = useSidebar();
+  const { state } = useSidebar();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -137,23 +137,9 @@ export function AppSidebar() {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
-  const handleSidebarMouseEnter = () => {
-    if (!isMobile) {
-      setOpen(true);
-    }
-  };
-
-  const handleSidebarMouseLeave = () => {
-    if (!isMobile) {
-      setOpen(false);
-    }
-  };
-
   return (
     <Sidebar
       collapsible="icon"
-      onMouseEnter={handleSidebarMouseEnter}
-      onMouseLeave={handleSidebarMouseLeave}
       className="[&_[data-sidebar=sidebar]]:scrollbar-thin [&_[data-sidebar=sidebar]]:scrollbar-track-transparent [&_[data-sidebar=sidebar]]:scrollbar-thumb-[#335133] hover:[&_[data-sidebar=sidebar]]:scrollbar-thumb-[#4b6e4b] [&_[data-sidebar=sidebar]]:scrollbar-thumb-rounded-full"
       style={sidebarColors}
     >

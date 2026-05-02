@@ -3,7 +3,7 @@ import { Layout } from "@/components/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Edit2, MapPin, Image as ImageIcon, Beef } from "lucide-react";
+import { ArrowLeft, Edit2, MapPin, Image as ImageIcon, Beef, Camera, Radar, Sparkles } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
@@ -88,133 +88,178 @@ export default function FarmDetail() {
   }
 
   const coordinates = parseCoordinates(farm.location);
+  const hasHerdWatch = !!farm.herdWatchRadius;
 
   return (
     <Layout>
-      <div className="organic-page space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="organic-title text-4xl">{farm.name}</h1>
-            <p className="organic-subtitle mt-1">Farm profile, map coverage, and resident animals</p>
-          </div>
-          <Button className="organic-btn-primary" onClick={() => navigate(`/farms/${id}/edit`)}>
-            <Edit2 className="mr-2 h-4 w-4" />
-            Update Farm
-          </Button>
-        </div>
-
-        <Card>
-          <CardContent className="p-0">
-            <div className="relative h-64 bg-muted">
-              {farm.imageUrl ? (
-                <img
-                  src={farm.imageUrl}
-                  alt={farm.name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center">
-                  <ImageIcon className="w-16 h-16 text-muted-foreground" />
-                </div>
-              )}
-            </div>
-            <div className="p-6 space-y-4">
+      <div className="organic-page">
+        <div className="farm-shell space-y-6 p-4 md:p-6 lg:p-8">
+          <section className="farm-hero p-5 md:p-7">
+            <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
               <div>
-                <h2 className="organic-title text-3xl not-italic">{farm.name}</h2>
-                <div className="flex items-center gap-2 text-muted-foreground mt-2">
-                  <MapPin className="h-4 w-4" />
-                  <span>{farm.location}</span>
-                </div>
+                <h1 className="organic-title text-4xl md:text-5xl">{farm.name}</h1>
+                <p className="organic-subtitle mt-2 max-w-2xl text-sm md:text-base">
+                  Farm profile, map coverage, and resident animal records.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <span className="farm-soft-chip">
+                  <Beef className="h-3.5 w-3.5" />
+                  {animals.length} animals
+                </span>
+                <span className="farm-soft-chip">
+                  <Radar className="h-3.5 w-3.5" />
+                  {hasHerdWatch ? `Radius ${farm.herdWatchRadius}m` : "Radius not set"}
+                </span>
+                <span className="farm-soft-chip">
+                  <Sparkles className="h-3.5 w-3.5" />
+                  Profile view
+                </span>
               </div>
             </div>
-          </CardContent>
-        </Card>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <Button className="organic-btn-primary farm-inline-action" onClick={() => navigate(`/farms/${id}/edit`)}>
+                <Edit2 className="h-4 w-4" />
+                Update Farm
+              </Button>
+              <Button variant="outline" className="organic-btn-outline farm-inline-action" onClick={() => navigate("/farms")}>
+                <ArrowLeft className="h-4 w-4" />
+                Back to Farms
+              </Button>
+            </div>
+          </section>
 
-        {coordinates && (
-          <Card>
-            <CardHeader>
-              <CardTitle>Farm on Map</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="organic-soft overflow-hidden" style={{ height: 400 }}>
-                <MapContainer
-                  center={coordinates}
-                  zoom={15}
-                  style={{ height: "100%", width: "100%" }}
-                  scrollWheelZoom={false}
-                >
-                  <TileLayer
-                    attribution={tileAttribution}
-                    url={tileUrl}
-                    maxZoom={20}
+          <Card className="farm-panel overflow-hidden">
+            <CardContent className="p-0">
+              <div className="relative h-72 bg-muted md:h-80">
+                {farm.imageUrl ? (
+                  <img
+                    src={farm.imageUrl}
+                    alt={farm.name}
+                    className="h-full w-full object-cover"
                   />
-                  <Marker position={coordinates} icon={markerIcon} />
-                  {farm.herdWatchRadius && (
-                    <Circle
-                      center={coordinates}
-                      radius={farm.herdWatchRadius}
-                      pathOptions={{
-                        color: 'hsl(142, 76%, 36%)',
-                        fillColor: 'hsl(142, 76%, 36%)',
-                        fillOpacity: 0.12,
-                        weight: 2,
-                        dashArray: '6 4',
-                      }}
-                    />
-                  )}
-                </MapContainer>
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center">
+                    <ImageIcon className="h-16 w-16 text-muted-foreground" />
+                  </div>
+                )}
+                <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/45 via-black/20 to-transparent p-5 text-white">
+                  <h2 className="text-2xl font-semibold">{farm.name}</h2>
+                  <div className="mt-2 flex items-start gap-2 text-sm text-white/90">
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
+                    <span className="line-clamp-2">{farm.location}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 border-t border-border/60 p-5 md:grid-cols-3">
+                <div className="farm-empty-state p-4">
+                  <p className="farm-section-title">Farm Image</p>
+                  <p className="mt-2 flex items-center gap-2 font-medium text-foreground">
+                    <Camera className="h-4 w-4 text-muted-foreground" />
+                    {farm.imageUrl ? "Uploaded" : "Not uploaded"}
+                  </p>
+                </div>
+                <div className="farm-empty-state p-4">
+                  <p className="farm-section-title">Animals Registered</p>
+                  <p className="organic-title mt-2 text-3xl not-italic">{animals.length}</p>
+                </div>
+                <div className="farm-empty-state p-4">
+                  <p className="farm-section-title">Herd Watch Radius</p>
+                  <p className="mt-2 font-medium text-foreground">
+                    {hasHerdWatch ? `${farm.herdWatchRadius} meters` : "Not configured"}
+                  </p>
+                </div>
               </div>
             </CardContent>
           </Card>
-        )}
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Animals at This Farm</CardTitle>
-            <Button
-              variant="outline"
-              className="organic-btn-outline"
-              size="sm"
-              onClick={() => navigate("/animals/create")}
-            >
-              <Beef className="mr-2 h-4 w-4" />
-              Add Animal Here
-            </Button>
-          </CardHeader>
-          <CardContent>
-            {animals.length === 0 ? (
-              <div className="text-center py-12">
-                <Beef className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                <p className="text-muted-foreground">No animals at this farm yet. Add one!</p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {animals.map((animal) => (
-                  <div
-                    key={animal._id}
-                    className="organic-soft organic-hover-card flex items-center justify-between p-4 cursor-pointer"
-                    onClick={() => navigate(`/animals/${animal._id}`)}
+          {coordinates && (
+            <Card className="farm-panel">
+              <CardHeader className="pb-3">
+                <CardTitle>Farm on Map</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <div className="farm-map-wrap" style={{ height: 400 }}>
+                  <MapContainer
+                    center={coordinates}
+                    zoom={15}
+                    style={{ height: "100%", width: "100%" }}
+                    scrollWheelZoom={false}
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                        <Beef className="h-5 w-5 text-primary" />
+                    <TileLayer
+                      attribution={tileAttribution}
+                      url={tileUrl}
+                      maxZoom={20}
+                    />
+                    <Marker position={coordinates} icon={markerIcon} />
+                    {farm.herdWatchRadius && (
+                      <Circle
+                        center={coordinates}
+                        radius={farm.herdWatchRadius}
+                        pathOptions={{
+                          color: "hsl(142, 76%, 36%)",
+                          fillColor: "hsl(142, 76%, 36%)",
+                          fillOpacity: 0.12,
+                          weight: 2,
+                          dashArray: "6 4",
+                        }}
+                      />
+                    )}
+                  </MapContainer>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          <Card className="farm-panel">
+            <CardHeader className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <CardTitle>Animals at This Farm</CardTitle>
+              <Button
+                variant="outline"
+                className="organic-btn-outline farm-inline-action"
+                size="sm"
+                onClick={() => navigate("/animals/create")}
+              >
+                <Beef className="h-4 w-4" />
+                Add Animal Here
+              </Button>
+            </CardHeader>
+            <CardContent>
+              {animals.length === 0 ? (
+                <div className="farm-empty-state py-12 text-center">
+                  <Beef className="mx-auto mb-4 h-12 w-12 text-muted-foreground" />
+                  <p className="text-muted-foreground">No animals at this farm yet. Add one!</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {animals.map((animal) => (
+                    <div
+                      key={animal._id}
+                      className="farm-panel farm-focus flex cursor-pointer items-center justify-between p-4"
+                      onClick={() => navigate(`/animals/${animal._id}`)}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                          <Beef className="h-5 w-5 text-primary" />
+                        </div>
+                        <div>
+                          <p className="font-medium">{animal.name}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {animal.species} • {animal.breed}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-medium">{animal.name}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {animal.species} • {animal.breed}
-                        </p>
-                      </div>
+                      <Badge variant="outline" className="capitalize">
+                        {animal.gender}
+                      </Badge>
                     </div>
-                    <Badge variant="outline" className="capitalize">
-                      {animal.gender}
-                    </Badge>
-                  </div>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+          </div>
       </div>
     </Layout>
   );
