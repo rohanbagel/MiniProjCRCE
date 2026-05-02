@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Layout } from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
@@ -59,29 +59,35 @@ export default function DeadAnimals() {
 
   return (
     <Layout loading={loading}>
-      <div className="space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
-        <div className="flex items-center justify-between">
-          <div className="text-right">
-             <h1 className="text-3xl font-bold">Memorial Records</h1>
+      <div className="organic-page">
+        <div className="farm-shell space-y-6 p-4 md:p-6 lg:p-8">
+        <section className="farm-hero p-5 md:p-7">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div className="text-right sm:text-left">
+             <h1 className="organic-title text-4xl md:text-5xl not-italic">Memorial Records</h1>
+             <p className="organic-subtitle mt-2">A respectful archive of animals that have passed.</p>
           </div>
-        </div>
+            <Button variant="outline" className="organic-btn-outline farm-inline-action" onClick={() => navigate("/animals")}>Back to Animals</Button>
+          </div>
+        </section>
 
-        <Card>
-            <CardContent className="pt-6">
+        <Card className="farm-panel overflow-hidden">
+            <CardContent className="p-4 md:p-6">
                 <div className="relative max-w-sm mb-6">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                         placeholder="Search by name or RFID..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="pl-10"
+                        className="organic-input h-11 pl-10"
                     />
                 </div>
 
+                <div className="farm-empty-state overflow-hidden shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="w-[100px]">Image</TableHead>
+                      <TableHead className="w-25">Image</TableHead>
                       <TableHead>Name</TableHead>
                       <TableHead>Age at Passing</TableHead>
                       <TableHead>Date of Passing</TableHead>
@@ -100,7 +106,7 @@ export default function DeadAnimals() {
                       filteredAnimals.map((animal) => (
                         <TableRow key={animal._id}>
                           <TableCell>
-                            <Avatar className="h-10 w-10">
+                            <Avatar className="h-10 w-10 border border-border/60">
                               <AvatarImage src={animal.imageUrl} alt={animal.name} />
                               <AvatarFallback>{getSpeciesIcon(animal.species, "h-4 w-4")}</AvatarFallback>
                             </Avatar>
@@ -116,7 +122,7 @@ export default function DeadAnimals() {
                             {new Date(animal.deathDate).toLocaleDateString()}
                           </TableCell>
                           <TableCell>{animal.causeOfDeath || "Unknown"}</TableCell>
-                          <TableCell className="text-right max-w-[200px] truncate">
+                          <TableCell className="text-right max-w-50 truncate">
                             {animal.notes || "-"}
                           </TableCell>
                         </TableRow>
@@ -124,8 +130,10 @@ export default function DeadAnimals() {
                     )}
                   </TableBody>
                 </Table>
+                </div>
             </CardContent>
         </Card>
+        </div>
       </div>
     </Layout>
   );

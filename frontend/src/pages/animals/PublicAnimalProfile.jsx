@@ -117,7 +117,7 @@ export default function PublicAnimalProfile() {
           <div className="flex items-center gap-2">
             <LanguageToggle />
             <ThemeToggle />
-            <Button asChild size="sm">
+            <Button asChild size="sm" className="rounded-xl">
               <Link to="/">Open main website</Link>
             </Button>
           </div>
@@ -125,11 +125,15 @@ export default function PublicAnimalProfile() {
       </div>
 
       <div className="mx-auto max-w-5xl px-4 py-6 space-y-6">
+        <div className="rounded-2xl border border-border/60 bg-linear-to-r from-muted/30 to-transparent px-4 py-3">
+          <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground font-semibold">Public Verification Card</p>
+          <p className="text-sm text-muted-foreground mt-1">This view is read-only and intended for trusted verification of animal profile and health data.</p>
+        </div>
         {/* Animal summary */}
-        <Card>
+        <Card className="overflow-hidden border-border/70 shadow-sm">
           <CardContent className="p-6">
             <div className="flex flex-col sm:flex-row gap-6 sm:items-center">
-              <Avatar className="h-24 w-24 border">
+              <Avatar className="h-24 w-24 border shadow-sm">
                 <AvatarImage src={animal.imageUrl} alt={animal.name} className="object-contain" />
                 <AvatarFallback className="text-4xl">
                   {getSpeciesIcon(animal.species, "h-12 w-12 text-muted-foreground")}
@@ -152,7 +156,7 @@ export default function PublicAnimalProfile() {
 
                 <div className="grid gap-3 sm:grid-cols-3 mt-5">
                   {animal.farmId && (
-                    <div className="flex items-center gap-3 rounded-lg border bg-card p-3">
+                    <div className="flex items-center gap-3 rounded-xl border bg-card p-3 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
                       <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
                         <MapPin className="h-5 w-5 text-primary" />
                       </div>
@@ -165,7 +169,7 @@ export default function PublicAnimalProfile() {
                   )}
 
                   {ownerName && (
-                    <div className="flex items-center gap-3 rounded-lg border bg-card p-3">
+                    <div className="flex items-center gap-3 rounded-xl border bg-card p-3 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
                       <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
                         <User className="h-5 w-5 text-primary" />
                       </div>
@@ -176,7 +180,7 @@ export default function PublicAnimalProfile() {
                     </div>
                   )}
 
-                  <div className="flex items-center gap-3 rounded-lg border bg-card p-3">
+                  <div className="flex items-center gap-3 rounded-xl border bg-card p-3 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
                     <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
                       <Calendar className="h-5 w-5 text-primary" />
                     </div>
@@ -193,7 +197,7 @@ export default function PublicAnimalProfile() {
 
         {/* Vitals + Graph */}
         {(latestVitals || chartData.length > 0) && (
-          <Card>
+          <Card className="border-border/70 shadow-sm">
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
                 <Heart className="h-5 w-5 text-chart-1" />
@@ -209,7 +213,7 @@ export default function PublicAnimalProfile() {
             <CardContent className="space-y-5">
               {latestVitals && (
                 <div className="grid grid-cols-3 gap-4">
-                  <div className="flex items-center gap-3 p-4 rounded-xl border bg-muted/30">
+                  <div className="flex items-center gap-3 p-4 rounded-xl border bg-muted/30 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
                     <Thermometer className="h-8 w-8 text-chart-3" />
                     <div>
                       <p className="text-xs text-muted-foreground">Temperature</p>
@@ -218,7 +222,7 @@ export default function PublicAnimalProfile() {
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 p-4 rounded-xl border bg-muted/30">
+                  <div className="flex items-center gap-3 p-4 rounded-xl border bg-muted/30 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
                     <Droplets className="h-8 w-8 text-chart-2" />
                     <div>
                       <p className="text-xs text-muted-foreground">Humidity</p>
@@ -227,7 +231,7 @@ export default function PublicAnimalProfile() {
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 p-4 rounded-xl border bg-muted/30">
+                  <div className="flex items-center gap-3 p-4 rounded-xl border bg-muted/30 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
                     <Heart className="h-8 w-8 text-chart-1" />
                     <div>
                       <p className="text-xs text-muted-foreground">Heart Rate</p>
@@ -274,7 +278,7 @@ export default function PublicAnimalProfile() {
         )}
 
         {/* Vaccination Summary */}
-        <Card>
+        <Card className="border-border/70 shadow-sm">
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
               <ShieldCheck className="h-5 w-5 text-primary" />
@@ -285,15 +289,15 @@ export default function PublicAnimalProfile() {
           <CardContent>
             {/* Stats */}
             <div className="grid grid-cols-3 gap-4 mb-6">
-              <div className="text-center p-3 rounded-lg bg-chart-1/10 border border-border">
+              <div className="text-center p-3 rounded-xl bg-chart-1/10 border border-border">
                 <p className="text-2xl font-bold text-chart-1">{administered.length}</p>
                 <p className="text-xs text-chart-1 font-medium">Completed</p>
               </div>
-              <div className="text-center p-3 rounded-lg bg-chart-2/10 border border-border">
+              <div className="text-center p-3 rounded-xl bg-chart-2/10 border border-border">
                 <p className="text-2xl font-bold text-chart-2">{scheduled.length}</p>
                 <p className="text-xs text-chart-2 font-medium">Scheduled</p>
               </div>
-              <div className="text-center p-3 rounded-lg bg-destructive/10 border border-border">
+              <div className="text-center p-3 rounded-xl bg-destructive/10 border border-border">
                 <p className="text-2xl font-bold text-destructive">{missed.length}</p>
                 <p className="text-xs text-destructive font-medium">Missed</p>
               </div>
@@ -308,7 +312,7 @@ export default function PublicAnimalProfile() {
                   return (
                     <div
                       key={event._id}
-                      className={`flex items-center gap-3 p-3 rounded-lg border ${style.bg}`}
+                      className={`flex items-center gap-3 p-3 rounded-xl border ${style.bg}`}
                     >
                       <StatusIcon className={`h-5 w-5 shrink-0 ${style.text}`} />
                       <div className="flex-1 min-w-0">

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ArrowLeft, Upload, Loader2, Image as ImageIcon } from "lucide-react";
+import { Upload, Loader2, Image as ImageIcon } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
@@ -167,19 +167,20 @@ export default function EditAnimal() {
 
   return (
     <Layout>
-      <div className="organic-page space-y-6 max-w-full px-6 mx-auto p-4 md:p-6 lg:p-8">
-        <div>
-          <h1 className="organic-title text-4xl">Edit Animal</h1>
-          <p className="organic-subtitle mt-1">Refine profile information, reproductive status, and farm assignment</p>
-        </div>
-        <Card>
-          <CardHeader>
+      <div className="organic-page">
+        <div className="farm-shell space-y-6 p-4 md:p-6 lg:p-8">
+        <section className="farm-hero p-5 md:p-7">
+          <h1 className="organic-title text-4xl md:text-5xl">Edit Animal</h1>
+          <p className="organic-subtitle mt-2 max-w-2xl text-sm md:text-base">Refine profile information, reproductive status, and farm assignment</p>
+        </section>
+        <Card className="farm-panel overflow-hidden">
+          <CardHeader className="border-b border-border/60 bg-linear-to-r from-background to-background/80">
             <CardTitle className="text-2xl">Update Animal Details</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 md:p-6 lg:p-7">
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="flex flex-col items-center gap-4">
-                <Avatar className="h-32 w-32 border-4 border-primary/20 cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+              <div className="farm-panel farm-focus flex flex-col items-center gap-4 p-4 md:p-5">
+                <Avatar className="h-32 w-32 border-4 border-primary/20 cursor-pointer shadow-sm" onClick={() => fileInputRef.current?.click()}>
                   <AvatarImage src={imagePreview} className="object-contain"/>
                   <AvatarFallback className="text-6xl flex items-center justify-center">
                     {formData.species ? getSpeciesIcon(formData.species, "h-16 w-16 text-muted-foreground") : <ImageIcon className="w-12 h-12 text-muted-foreground" />}
@@ -195,7 +196,7 @@ export default function EditAnimal() {
                 <Button
                   type="button"
                   variant="outline"
-                  className="organic-btn-outline"
+                  className="organic-btn-outline farm-inline-action"
                   onClick={() => fileInputRef.current?.click()}
                 >
                   <Upload className="mr-2 h-4 w-4" />
@@ -203,14 +204,14 @@ export default function EditAnimal() {
                 </Button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="animal-surface grid grid-cols-1 md:grid-cols-2 gap-4 p-4 md:p-5">
                 <div className="space-y-2">
                   <Label htmlFor="name">Animal Name *</Label>
                   <Input
                     id="name"
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
-                    className="organic-input"
+                    className="organic-input h-11"
                     required
                   />
                 </div>
@@ -221,7 +222,7 @@ export default function EditAnimal() {
                     id="rfid"
                     value={formData.rfid}
                     onChange={(e) => handleInputChange("rfid", e.target.value)}
-                    className="organic-input"
+                    className="organic-input h-11"
                     required
                   />
                 </div>
@@ -232,7 +233,7 @@ export default function EditAnimal() {
                     value={formData.species}
                     onValueChange={(value) => handleInputChange("species", value)}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="h-11">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -251,7 +252,7 @@ export default function EditAnimal() {
                     id="breed"
                     value={formData.breed}
                     onChange={(e) => handleInputChange("breed", e.target.value)}
-                    className="organic-input"
+                    className="organic-input h-11"
                     required
                   />
                 </div>
@@ -262,7 +263,7 @@ export default function EditAnimal() {
                     value={formData.gender}
                     onValueChange={(value) => handleInputChange("gender", value)}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="h-11">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -282,13 +283,13 @@ export default function EditAnimal() {
                       value={formData.age}
                       onChange={(e) => handleInputChange("age", e.target.value)}
                       required
-                      className="organic-input flex-1"
+                      className="organic-input h-11 flex-1"
                     />
                     <Select
                       value={formData.ageUnit}
                       onValueChange={(value) => handleInputChange("ageUnit", value)}
                     >
-                      <SelectTrigger className="w-32">
+                      <SelectTrigger className="w-32 h-11">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -306,7 +307,7 @@ export default function EditAnimal() {
                     value={formData.reproductiveStatus}
                     onValueChange={(value) => handleInputChange("reproductiveStatus", value)}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="h-11">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -324,7 +325,7 @@ export default function EditAnimal() {
                     value={formData.farmId}
                     onValueChange={(value) => handleInputChange("farmId", value)}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="h-11">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -344,16 +345,16 @@ export default function EditAnimal() {
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2">
+              <div className="flex justify-end gap-2 border-t border-border/60 pt-5">
                 <Button
                   type="button"
                   variant="outline"
-                  className="organic-btn-outline"
+                  className="organic-btn-outline farm-inline-action"
                   onClick={() => navigate(`/animals/${id}`)}
                 >
                   Go Back
                 </Button>
-                <Button className="organic-btn-primary" type="submit" disabled={loading}>
+                <Button className="organic-btn-primary farm-inline-action" type="submit" disabled={loading}>
                   {loading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -367,6 +368,7 @@ export default function EditAnimal() {
             </form>
           </CardContent>
         </Card>
+        </div>
       </div>
     </Layout>
   );

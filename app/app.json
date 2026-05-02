@@ -55,7 +55,8 @@
         {
           "calendarPermission": "Allow पशु पहचान to access your calendar to sync vaccination schedules."
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,
