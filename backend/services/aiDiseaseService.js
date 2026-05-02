@@ -60,7 +60,7 @@ async function analyzeWithGemini(imagePart, symptomText, animalContext) {
         throw new Error("GEMINI_API_KEY is not configured. Add GEMINI_API_KEY=your_key to your backend .env file.");
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
 
     const prompt = `
 You are an expert veterinary AI assistant helping a rural farmer diagnose cattle disease.
