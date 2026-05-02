@@ -133,7 +133,7 @@ toast.info("Checking your photo with AI...", { duration: 2000 });
       const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
       
       const model = genAI.getGenerativeModel({ 
-        model: "gemini-2.5-flash-lite" 
+        model: "gemini-3-flash-preview" 
       });
 
       const prompt = `You are an expert veterinarian and farm animal specialist. Analyze this image of a farm animal and extract as much information as possible Fill in ALL fields with your best professional estimate

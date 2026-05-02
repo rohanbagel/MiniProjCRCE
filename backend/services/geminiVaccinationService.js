@@ -18,7 +18,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
  * @returns {{ vaccineName, date, animalName, animalRfid, veterinarian, notes, batchNumber }}
  */
 async function extractVaccinationInfo(imageBuffer, mimeType) {
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-lite' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
 
   const prompt = `You are an expert veterinary document parser. Analyze this vaccination certificate/record image and extract the following information. Return ONLY a JSON object with these fields (use null if not found):
 
